@@ -37,3 +37,18 @@ executable day1
   hs-source-dirs:      src
   default-language:    Haskell2010
   
+executable day2
+  main-is:             Day2.hs
+  build-depends:       base >=4.12 && <4.13,
+                       text,
+                       split,
+                       cond
+  hs-source-dirs:      src
+  default-language:    Haskell2010
+  
+executable day3
+  main-is:             Day3.hs
+  build-depends:       base >=4.12 && <4.13
+  hs-source-dirs:      src
+  default-language:    Haskell2010
+
