@@ -1,13 +1,11 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Main where
 
-import qualified Data.List.Split as S (splitOn)
+import qualified Data.List.Split as S (splitOneOf)
 import Data.Algebra.Boolean (xor)
 
 data Password = Password Policy String deriving (Show)
 data Policy = Policy Int Int Char deriving (Show)
-
-
 
 parseInput :: [String] -> [Password]
 parseInput ss = map parsePassword ss
@@ -17,14 +15,12 @@ parseInt = read
 
 parsePassword :: String -> Password
 parsePassword s = Password pol pass where
-                        parts = S.splitOn ":" s 
-                        polparts = S.splitOn " " (parts !! 0)
-                        rangeparts = S.splitOn "-" (polparts !! 0)
-                        min = parseInt (rangeparts !! 0) 
-                        max = parseInt (rangeparts !! 1) 
-                        char = head $ polparts !! 1
+                        parts = S.splitOneOf ": -" s 
+                        min = parseInt (parts !! 0) 
+                        max = parseInt (parts !! 1) 
+                        char = head $ parts !! 2
                         pol = Policy min max char
-                        pass = drop 1 $ parts !! 1
+                        pass = parts !! 4
 
 validPassword :: Password -> Bool
 validPassword (Password (Policy mi ma c) p) = cc >= mi && cc <= ma where
